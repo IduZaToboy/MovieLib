@@ -104,9 +104,9 @@ class Client(object):
         title_history = TitlesHistory(
             id=title_history_data[0],
             user_id=title_history_data[1],
-            status=title_history_data[2],
-            status_change=title_history_data[3],
-            id=title_history_data[4],
+            title_id=title_history_data[2],
+            status=title_history_data[3],
+            status_change=title_history_data[4],
         )
         return title_history
 
