@@ -41,7 +41,7 @@ class Client(object):
                     FROM users
                     WHERE telegram_id = %s
                                   """,
-            (telegram_id),
+            (telegram_id,),
         )
         user_data = await self.cursor.fetchone()
         user = Users(
@@ -69,7 +69,7 @@ class Client(object):
                     FROM titles
                     WHERE `name` = %s
                                   """,
-            (name),
+            (name,),
         )
         title_data = await self.cursor.fetchone()
         title = Titles(id=title_data[0], name=name, id_kinopoisk=title_data[2])
@@ -146,6 +146,6 @@ class Client(object):
             """
                 DELETE FROM titles_history WHERE id=%s
                                   """,
-            (title_history.id),
+            (title_history.id,),
         )
         await self.connection.commit()
