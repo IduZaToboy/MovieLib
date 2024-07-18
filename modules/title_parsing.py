@@ -1,6 +1,5 @@
 from typing import List
 import aiohttp
-import asyncio
 
 
 from modules.my_classes import Titles
@@ -26,9 +25,39 @@ class Client(object):
         top_title_data = data["suggest"]["top"]["topResult"]["global"]
         other_titles_data = data["suggest"]["top"]["movies"]
         titles_response = []
-        top_film = Titles(top_title_data["title"]["russian"], top_title_data["id"])
-        titles_response.append(top_film)
+        if top_title_data["__typename"] == "Film":
+            top_film = Titles(
+                top_title_data["title"]["russian"],
+                top_title_data["id"],
+                top_title_data["productionYear"],
+                top_title_data["__typename"],
+            )
+            titles_response.append(top_film)
+        else:
+            top_film = Titles(
+                top_title_data["title"]["russian"],
+                top_title_data["id"],
+                top_title_data["releaseYears"][0]["start"],
+                top_title_data["__typename"],
+            )
+            titles_response.append(top_film)
+
         for title in other_titles_data:
-            other_title = Titles(title["movie"]["title"]["russian"], title["movie"]["id"])
-            titles_response.append(other_title)
+            if title["movie"]["__typename"] == "Film":
+                other_title = Titles(
+                    title["movie"]["title"]["russian"],
+                    title["movie"]["id"],
+                    title["movie"]["productionYear"],
+                    title["movie"]["__typename"],
+                )
+                titles_response.append(other_title)
+            else:
+                other_title = Titles(
+                    title["movie"]["title"]["russian"],
+                    title["movie"]["id"],
+                    title["movie"]["releaseYears"][0]["start"],
+                    title["movie"]["__typename"],
+                )
+                titles_response.append(other_title)
+
         return titles_response

@@ -1,6 +1,4 @@
 from datetime import datetime, timezone
-from turtle import title
-from typing import Union
 from mysql.connector.aio import connect
 from modules.my_classes import Users, Titles, TitlesHistory
 from modules.tables_text import create_tables_text
@@ -27,7 +25,7 @@ class Client(object):
         await self.cursor.execute(
             """
                 INSERT INTO users
-                    (telegram_id, datatime_create)
+                    (telegram_id, datetime_create)
                     VALUES (%s, %s)
                             """,
             (user.telegram_id, user.datetime_create.isoformat()),
@@ -47,7 +45,7 @@ class Client(object):
         user = Users(
             id=user_data[0],
             telegram_id=telegram_id,
-            datetime_create=datetime.fromisoformat(user_data[2]),
+            datetime_create=user_data[2],
         )
         return user
 

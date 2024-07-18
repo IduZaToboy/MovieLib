@@ -19,9 +19,11 @@ class Users:
 
 
 class Titles:
-    def __init__(self, name: str, id_kinopoisk: int, id: int = None) -> None:
+    def __init__(self, name: str, id_kinopoisk: int, year: int, type: str, id: int = None) -> None:
         self.id = id
         self.name = name
+        self.year = year
+        self.type = type
         self.id_kinopoisk = id_kinopoisk
 
 
